@@ -2,6 +2,10 @@
 
 FastAPI-based doctor appointment system with AI assistant using Model Context Protocol (MCP).
 
+<img width="1256" height="907" alt="image" src="https://github.com/user-attachments/assets/72fdba22-b8d4-4e29-9bc5-29fc875ff7a8" />
+
+
+
 ## Features
 
 - AI assistant for appointment management
