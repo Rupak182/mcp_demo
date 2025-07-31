@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends, HTTPException
-from fastmcp import FastMCP
 from sqlalchemy.orm import Session
 from datetime import date, timedelta, datetime
 typing_import = __import__('typing')
@@ -11,7 +10,6 @@ import schemas
 # import services
 
 router = APIRouter()
-mcp = FastMCP(name="DoctorAppointmentTools")
 
 @router.get(
     "/availability/{doctor_name}",
@@ -85,8 +83,7 @@ def schedule_appointment(
     db: Session = Depends(database.get_db)
 ) -> schemas.AppointmentOut:
     """
-    Books a new appointment. Creates a DB record, sends a Google Calendar invite,
-    and dispatches a confirmation email. Use this only after confirming the desired
+    Books a new appointment. Creates a DB record, Use this only after confirming the desired
     time slot with the user.
     """
     # Fetch doctor record

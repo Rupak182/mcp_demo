@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
  
 import database
 import router2
-import agent
 import schemas
 from fastapi_mcp import FastApiMCP
 import uvicorn
@@ -31,23 +30,6 @@ app.include_router(router2.router, prefix="/api", tags=["tools"])
 # A simple in-memory dictionary to store conversation history per session
 session_store = {}
 
-# --- Agent Invocation Endpoint ---
-# This is the single endpoint our frontend will talk to
-@app.post("/agent/invoke", response_model=schemas.AgentResponse)
-async def handle_agent_prompt(request: schemas.AgentRequest):
-    session_id = request.session_id
-    
-    # Retrieve or initialize conversation history
-    history = session_store.get(session_id,[])
-    
-    # Invoke the agent with the prompt and history
-    ai_response = await agent.invoke_agent(request.prompt, history)
-    
-    # Update the history with the new turn
-    history.append({"user": request.prompt, "ai": ai_response})
-    session_store[session_id] = history
-    
-    return schemas.AgentResponse(response=ai_response)
 
 # --- MCP Server Setup ---
 # This is the magic that exposes our API endpoints as MCP tools
